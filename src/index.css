@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom Mobile styling if needed */
+body {
+  background-color: #f9fafb; /* gray-50 */
+  overscroll-behavior-y: none; /* Prevent pull-to-refresh on mobile if desirable */
+}
