@@ -217,20 +217,20 @@ const PaymentDetails = () => {
                     MYTODOO PAY
                 </p>
                 <h2 className="text-5xl font-bold mb-2 tracking-tight">
-                    {formatCurrency(balance)}
+                    {activeTab === 'tasker'
+                        ? formatCurrency(taskerSummary?.pending_payout ?? 0)
+                        : formatCurrency(balance)}
                 </h2>
-                <p className="text-sm font-medium opacity-80">Available Balance</p>
+                <p className="text-sm font-medium opacity-80">
+                    {activeTab === 'tasker' ? 'Pending Payout' : 'Available Balance'}
+                </p>
 
-                {/* Extra summary info below balance */}
+                {/* Extra summary info below */}
                 {activeTab === 'tasker' && taskerSummary && (
                     <div className="mt-4 flex justify-center gap-6 text-xs opacity-80">
                         <div>
                             <p className="font-semibold">{formatCurrency(taskerSummary.total_payout)}</p>
                             <p>Total Payout</p>
-                        </div>
-                        <div>
-                            <p className="font-semibold">{formatCurrency(taskerSummary.pending_payout)}</p>
-                            <p>Pending</p>
                         </div>
                     </div>
                 )}
@@ -268,7 +268,6 @@ const PaymentDetails = () => {
             <div className="space-y-4">
                 {currentHistory.length === 0 && (
                     <div className="text-center py-12 text-slate-400 text-sm">
-                        <span className="material-symbols-outlined text-4xl mb-2 block">receipt_long</span>
                         No transactions found.
                     </div>
                 )}
