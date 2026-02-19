@@ -181,8 +181,8 @@ const PaymentDetails = () => {
                     <button
                         onClick={() => setActiveTab('tasker')}
                         className={`flex-1 py-2 text-sm font-semibold rounded-full transition-all duration-200 ${activeTab === 'tasker'
-                                ? 'bg-primary text-white shadow-sm'
-                                : 'text-slate-500'
+                            ? 'bg-primary text-white shadow-sm'
+                            : 'text-slate-500'
                             }`}
                     >
                         Tasker
@@ -190,8 +190,8 @@ const PaymentDetails = () => {
                     <button
                         onClick={() => setActiveTab('poster')}
                         className={`flex-1 py-2 text-sm font-semibold rounded-full transition-all duration-200 ${activeTab === 'poster'
-                                ? 'bg-primary text-white shadow-sm'
-                                : 'text-slate-500'
+                            ? 'bg-primary text-white shadow-sm'
+                            : 'text-slate-500'
                             }`}
                     >
                         Poster
@@ -250,15 +250,15 @@ const PaymentDetails = () => {
 
             {/* ── 3-Column Stat Cards ── */}
             <div className="grid grid-cols-3 gap-3">
-                <div className="bg-white p-4 rounded-2xl text-center shadow-[var(--ios-shadow)] border border-slate-50">
+                <div className="bg-white p-4 rounded-2xl text-center shadow-md border border-slate-200">
                     <p className="text-xs text-slate-500 font-medium mb-3">Complete</p>
                     <p className="text-2xl font-bold text-emerald-500">{completeCount}</p>
                 </div>
-                <div className="bg-white p-4 rounded-2xl text-center shadow-[var(--ios-shadow)] border border-slate-50">
+                <div className="bg-white p-4 rounded-2xl text-center shadow-md border border-slate-200">
                     <p className="text-xs text-slate-500 font-medium mb-3">Pending</p>
                     <p className="text-2xl font-bold text-amber-500">{pendingCount}</p>
                 </div>
-                <div className="bg-white p-4 rounded-2xl text-center shadow-[var(--ios-shadow)] border border-slate-50">
+                <div className="bg-white p-4 rounded-2xl text-center shadow-md border border-slate-200">
                     <p className="text-xs text-slate-500 font-medium mb-3">Cancelled</p>
                     <p className="text-2xl font-bold text-rose-500">{cancelledCount}</p>
                 </div>
@@ -279,12 +279,12 @@ const PaymentDetails = () => {
                     return (
                         <div
                             key={item.id}
-                            className="bg-white rounded-3xl p-5 shadow-[var(--ios-shadow)] border border-slate-50 space-y-4"
+                            className="bg-white rounded-3xl p-5 shadow-md border border-slate-200 space-y-4"
                         >
                             {/* Title row */}
                             <div className="flex justify-between items-start">
-                                <h3 className="text-lg font-bold leading-tight pr-4">
-                                    {item.task_id}
+                                <h3 className="text-lg font-bold leading-tight pr-4 flex-1 min-w-0 break-words">
+                                    {item.task_name}
                                 </h3>
                                 <span className="text-lg font-bold text-primary whitespace-nowrap">
                                     {formatCurrency(item.task_price)}
@@ -297,8 +297,8 @@ const PaymentDetails = () => {
                                     <span className="material-symbols-outlined text-[18px] mr-2">group</span>
                                     <span className="text-sm">
                                         {activeTab === 'tasker'
-                                            ? `Poster → ${item.poster_user_id}`
-                                            : `Tasker → ${item.tasker_user_id}`}
+                                            ? `Poster → ${item.poster_name ?? 'null'}`
+                                            : `Tasker → ${item.tasker_name ?? 'null'}`}
                                     </span>
                                 </div>
 
@@ -325,15 +325,11 @@ const PaymentDetails = () => {
                                 )}
                             </div>
 
-                            {/* Footer: status badge + date */}
-                            <div className="pt-4 border-t border-slate-50 flex justify-between items-center">
+                            {/* Footer: status badge */}
+                            <div className="pt-4 border-t border-slate-50 flex items-center">
                                 <div className={`${statusCfg.bg} text-white px-4 py-1.5 rounded-full flex items-center text-xs font-bold`}>
                                     <span className="material-symbols-outlined text-sm mr-1">{statusCfg.icon}</span>
                                     {statusCfg.label}
-                                </div>
-                                <div className="flex items-center text-slate-400 text-xs font-medium">
-                                    <span className="material-symbols-outlined text-sm mr-1">calendar_today</span>
-                                    {formatDate(item.createdAt)}
                                 </div>
                             </div>
                         </div>
