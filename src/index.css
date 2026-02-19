@@ -1,9 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Custom Mobile styling if needed */
+:root {
+  --ios-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
 body {
-  background-color: #f9fafb; /* gray-50 */
-  overscroll-behavior-y: none; /* Prevent pull-to-refresh on mobile if desirable */
+  font-family: 'Inter', sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  background-color: #F8F9FB;
+  overscroll-behavior-y: none;
+}
+
+.balance-gradient {
+  background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+}
+
+.material-symbols-outlined {
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 }
