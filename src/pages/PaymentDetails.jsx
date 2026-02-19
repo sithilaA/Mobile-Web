@@ -143,6 +143,23 @@ const PaymentDetails = () => {
     const pendingCount = countByStatus(currentHistory, 'pending');
     const cancelledCount = countByStatus(currentHistory, 'cancelled');
 
+    // --- Computed totals from history ---
+    const computeTotals = (history) => {
+        return history.reduce((acc, item) => {
+            const price = Number(item.task_price) || 0;
+            const commission = Number(item.commission) || 0;
+            const serviceFee = Number(item.service_fee) || 0;
+            acc.totalTaskPrice += price;
+            acc.totalCommission += commission;
+            acc.totalServiceFee += serviceFee;
+            acc.totalPayout += (price - commission);
+            acc.totalPaid += (price + serviceFee);
+            return acc;
+        }, { totalTaskPrice: 0, totalCommission: 0, totalServiceFee: 0, totalPayout: 0, totalPaid: 0 });
+    };
+
+    const totals = computeTotals(currentHistory);
+
     // --- Loading state ---
     if (loading) {
         return (
@@ -199,6 +216,12 @@ const PaymentDetails = () => {
                 </div>
             </div>
 
+            {/* ── Info Note ── */}
+            <div className="bg-blue-50 border border-blue-100 rounded-xl px-4 py-3 text-xs text-blue-700 space-y-1">
+                <p>Payout processing time: up to 3 business days</p>
+                <p>Refund processing time: up to 2 business days</p>
+            </div>
+
             {/* ── Balance Gradient Card ── */}
             <div className="balance-gradient rounded-3xl p-8 text-center text-white shadow-[var(--ios-shadow)] relative overflow-hidden">
                 {/* Grid pattern overlay */}
@@ -248,7 +271,8 @@ const PaymentDetails = () => {
                 )}
             </div>
 
-            {/* ── 3-Column Stat Cards ── */}
+
+            {/* ── Status Count Row ── */}
             <div className="grid grid-cols-3 gap-3">
                 <div className="bg-white p-4 rounded-2xl text-center shadow-md border border-slate-200">
                     <p className="text-xs text-slate-500 font-medium mb-3">Complete</p>
@@ -290,37 +314,38 @@ const PaymentDetails = () => {
                                 </span>
                             </div>
 
-                            {/* Details */}
+                            {/* Financial details */}
                             <div className="space-y-2">
-                                <div className="flex items-center text-slate-500">
-                                    <span className="material-symbols-outlined text-[18px] mr-2">group</span>
-                                    <span className="text-sm">
-                                        {activeTab === 'tasker'
-                                            ? `Poster → ${item.poster_name ?? 'null'}`
-                                            : `Tasker → ${item.tasker_name ?? 'null'}`}
-                                    </span>
-                                </div>
-
-                                {/* Show payout for tasker, refund info for poster */}
-                                {activeTab === 'tasker' && item.payout_amount > 0 && (
-                                    <div className="flex items-center text-slate-500">
-                                        <span className="material-symbols-outlined text-[18px] mr-2">payments</span>
-                                        <span className="text-sm">Payout: {formatCurrency(item.payout_amount)}</span>
-                                    </div>
-                                )}
-                                {activeTab === 'poster' && item.refund_amount > 0 && (
-                                    <div className="flex items-center text-slate-500">
-                                        <span className="material-symbols-outlined text-[18px] mr-2">undo</span>
-                                        <span className="text-sm">Refund: {formatCurrency(item.refund_amount)}</span>
-                                    </div>
-                                )}
-                                {item.penalty_amount > 0 && (
-                                    <div className="flex items-center text-slate-500">
-                                        <span className="material-symbols-outlined text-[18px] mr-2">warning</span>
-                                        <span className="text-sm">
-                                            Penalty ({item.penalty_owner}): {formatCurrency(item.penalty_amount)}
-                                        </span>
-                                    </div>
+                                {activeTab === 'tasker' ? (
+                                    <>
+                                        <div className="flex justify-between text-sm">
+                                            <span className="text-slate-500">Task Price</span>
+                                            <span className="font-medium text-slate-700">{formatCurrency(item.task_price)}</span>
+                                        </div>
+                                        <div className="flex justify-between text-sm">
+                                            <span className="text-slate-500">Commission</span>
+                                            <span className="font-medium text-rose-500">- {formatCurrency(item.commission)}</span>
+                                        </div>
+                                        <div className="flex justify-between text-sm border-t border-slate-100 pt-2">
+                                            <span className="font-semibold text-slate-700">Your Payout</span>
+                                            <span className="font-bold text-emerald-600">{formatCurrency((Number(item.task_price) || 0) - (Number(item.commission) || 0))}</span>
+                                        </div>
+                                    </>
+                                ) : (
+                                    <>
+                                        <div className="flex justify-between text-sm">
+                                            <span className="text-slate-500">Task Price</span>
+                                            <span className="font-medium text-slate-700">{formatCurrency(item.task_price)}</span>
+                                        </div>
+                                        <div className="flex justify-between text-sm">
+                                            <span className="text-slate-500">Service Fee</span>
+                                            <span className="font-medium text-amber-500">+ {formatCurrency(item.service_fee)}</span>
+                                        </div>
+                                        <div className="flex justify-between text-sm border-t border-slate-100 pt-2">
+                                            <span className="font-semibold text-slate-700">Total Paid</span>
+                                            <span className="font-bold text-primary">{formatCurrency((Number(item.task_price) || 0) + (Number(item.service_fee) || 0))}</span>
+                                        </div>
+                                    </>
                                 )}
                             </div>
 
