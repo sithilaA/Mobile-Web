@@ -314,6 +314,13 @@ const PaymentDetails = () => {
                                 </span>
                             </div>
 
+                            {/* Name */}
+                            <p className="text-sm text-slate-500">
+                                {activeTab === 'tasker'
+                                    ? `Posted by: ${item.poster_name ?? 'Null'}`
+                                    : `Tasker: ${item.tasker_name ?? 'Null'}`}
+                            </p>
+
                             {/* Financial details */}
                             <div className="space-y-2">
                                 {activeTab === 'tasker' ? (
