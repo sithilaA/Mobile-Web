@@ -4,10 +4,10 @@ import mytodooLogo from '../assets/mytodoo-adaptive-icon.png';
 /**
  * Shared header for all legal/static pages.
  * Props:
- *  - title      : string  – page heading
- *  - subtitle   : string  – smaller line beneath the heading (optional)
- *  - badge      : string  – small coloured pill text, e.g. "Last updated: Feb 2026" (optional)
- *  - badgeColor : string  – tailwind bg colour class, defaults to "bg-blue-50 text-blue-700"
+ *  - title      : string  - page heading
+ *  - subtitle   : string  - smaller line beneath the heading (optional)
+ *  - badge      : string  - small coloured pill text, e.g. "Last updated: Feb 2026" (optional)
+ *  - badgeColor : string  - tailwind bg colour class, defaults to "bg-blue-50 text-blue-700"
  */
 const LegalPageHeader = ({ title, subtitle, badge, badgeColor }) => {
     return (

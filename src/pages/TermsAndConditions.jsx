@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import LegalPageHeader from '../components/LegalPageHeader';
 
-/* ─────────────────────────────────────────────────────────
-   All 20 T&C Sections  –  content is trusted static HTML
-   ───────────────────────────────────────────────────────── */
+/* ---------------------------------------------------------
+   All 20 T&C Sections  -  content is trusted static HTML
+   --------------------------------------------------------- */
 const tcSections = [
   {
     number: '01',
     title: 'Introduction',
     content: `
       <h3>1.1 Agreement Overview</h3>
-      <p>These Terms and Conditions ("Agreement") govern your access to and use of the MyToDoo website, mobile application and related services (together, the "Platform"). The Platform is operated by [Name of the Company] (ACN [………………]) ("MyToDoo", "we", "our" or "us").</p>
+      <p>These Terms and Conditions ("Agreement") govern your access to and use of the MyToDoo website, mobile application and related services (together, the "Platform"). The Platform is operated by [Name of the Company] (ACN [..................]) ("MyToDoo", "we", "our" or "us").</p>
       <h3>1.2 Acceptance of Terms</h3>
       <p>By creating an account, posting a task, making or accepting an offer, or otherwise using the Platform, you agree to be bound by this Agreement, together with our Privacy Policy, Community Guidelines and any other policies published on the Platform (collectively, the "Policies"). If you do not agree, you must not use the Platform.</p>
       <h3>1.3 Nature of Platform</h3>
@@ -171,23 +171,23 @@ const tcSections = [
       <h3>6.1 Types of Fees</h3>
       <p>The following fees apply to use of the Platform:</p>
       <ul>
-        <li><strong>Connection Fee</strong> – a fee payable by the Poster when accepting a Tasker's Offer. The Connection Fee is separate to the Agreed Price and is non-refundable.</li>
-        <li><strong>Tasker Service Fee</strong> – a fee deducted from the Agreed Price before release of funds to the Tasker. The Tasker Service Fee is charged on a tiered basis, as set out in clause 6.3.</li>
-        <li><strong>Transaction Fees</strong> – any additional fees required to process payments (e.g. card fees, Stripe charges) may be passed on to Users.</li>
+        <li><strong>Connection Fee</strong> - a fee payable by the Poster when accepting a Tasker's Offer. The Connection Fee is separate to the Agreed Price and is non-refundable.</li>
+        <li><strong>Tasker Service Fee</strong> - a fee deducted from the Agreed Price before release of funds to the Tasker. The Tasker Service Fee is charged on a tiered basis, as set out in clause 6.3.</li>
+        <li><strong>Transaction Fees</strong> - any additional fees required to process payments (e.g. card fees, Stripe charges) may be passed on to Users.</li>
       </ul>
       <h3>6.2 GST</h3>
       <p>(a) All fees payable by Australian Users are inclusive of GST.</p>
       <p>(b) Where services are provided outside Australia, GST does not apply to the relevant fees, but Users remain responsible for any applicable local taxes.</p>
-      <h3>6.3 Tasker Service Fee – Tiered Structure</h3>
+      <h3>6.3 Tasker Service Fee - Tiered Structure</h3>
       <p>The Tasker Service Fee depends on the Tasker's total completed earnings in the previous 30 days:</p>
       <table class="fee-table">
         <thead>
           <tr><th>Tier</th><th>Earnings (30 days)</th><th>Fee</th></tr>
         </thead>
         <tbody>
-          <tr><td>🌱 Grasshopper</td><td>Less than $799</td><td>15% + GST</td></tr>
-          <tr><td>🚗 P-Plater</td><td>$800 – $2,499</td><td>13% + GST</td></tr>
-          <tr><td>⭐ Expert</td><td>$2,500 – $4,999</td><td>11% + GST</td></tr>
+         <tr><td>🌱 Grasshopper</td><td>Less than $799</td><td>15% + GST</td></tr>
+          <tr><td>🚗 P-Plater</td><td>$800 - $2,499</td><td>13% + GST</td></tr>
+          <tr><td>⭐ Expert</td><td>$2,500 - $4,999</td><td>11% + GST</td></tr>
           <tr><td>🏆 Grandmaster</td><td>$5,000 or more</td><td>9% + GST</td></tr>
         </tbody>
       </table>
@@ -231,7 +231,7 @@ const tcSections = [
       <p>(a) MyToDoo Points may be issued to Users for engagement activities such as referrals, reviews, promotions, or other participation as determined by MyToDoo.</p>
       <p>(b) Points may be redeemed only on the Platform, in accordance with the rules published from time to time.</p>
       <p>(c) Points are not redeemable for cash and are not gift cards or vouchers for the purposes of the Australian Consumer Law.</p>
-      <p>(d) Points may have a shorter expiry (for example, 6–12 months) as notified at the time of issue, and unused Points will be forfeited at expiry.</p>
+      <p>(d) Points may have a shorter expiry (for example, 6-12 months) as notified at the time of issue, and unused Points will be forfeited at expiry.</p>
       <p>(e) Points may be cancelled if obtained fraudulently, in breach of this Agreement, or if the loyalty program is suspended or terminated.</p>
       <h3>7.8 Consumer Guarantees</h3>
       <p>Nothing in this Agreement limits or excludes your rights under the Australian Consumer Law. If services are not provided with due care and skill, or are otherwise defective, you may be entitled to a refund, repair or replacement, and these rights cannot be excluded.</p>
@@ -260,7 +260,7 @@ const tcSections = [
       <p>(c) MyToDoo disclaims all liability for any loss, damage, injury, or claim arising out of or connected with a Task, except to the extent liability cannot lawfully be excluded.</p>
       <h3>8.5 Limitation of Liability</h3>
       <p>(a) Except for liability that cannot be excluded under the Australian Consumer Law or other applicable laws, MyToDoo disclaims all liability for any direct, indirect, incidental, consequential, or special loss or damage arising in connection with a Task, User conduct, or insurance failure.</p>
-      <p>(b) MyToDoo's total liability to any User will not exceed the greater of: (i) the total fees paid by that User to MyToDoo in the 12 months prior to the incident; or (ii) AUD $500 — whichever is lower.</p>
+      <p>(b) MyToDoo's total liability to any User will not exceed the greater of: (i) the total fees paid by that User to MyToDoo in the 12 months prior to the incident; or (ii) AUD $500  -  whichever is lower.</p>
     `,
   },
   {
@@ -483,7 +483,7 @@ const tcSections = [
         <li>Post: [insert registered office address]</li>
       </ul>
       <h3>17.4 Time of Receipt</h3>
-      <p>Unless proven otherwise, a notice will be taken to have been received: (a) if sent by email or Platform notification – at the time of transmission; (b) if delivered by hand – at the time of delivery; and (c) if sent by prepaid ordinary post – three (3) business days after posting within Australia, or seven (7) business days after posting internationally.</p>
+      <p>Unless proven otherwise, a notice will be taken to have been received: (a) if sent by email or Platform notification - at the time of transmission; (b) if delivered by hand - at the time of delivery; and (c) if sent by prepaid ordinary post - three (3) business days after posting within Australia, or seven (7) business days after posting internationally.</p>
       <h3>17.5 Electronic Communications</h3>
       <p>You consent to receive communications from MyToDoo electronically, and you agree that all agreements, notices and other communications provided electronically satisfy any legal requirement that such communications be in writing.</p>
     `,
@@ -567,9 +567,9 @@ const tcSections = [
   },
 ];
 
-/* ─────────────────────────────────────────────────────────
+/* ---------------------------------------------------------
    Component
-   ───────────────────────────────────────────────────────── */
+   --------------------------------------------------------- */
 const TermsAndConditions = () => {
   const [openIndex, setOpenIndex] = useState(null);
 
@@ -577,7 +577,7 @@ const TermsAndConditions = () => {
 
   return (
     <div className="min-h-screen bg-[#F8F9FB]">
-      {/* ── Header ── */}
+      {/* -- Header -- */}
       <LegalPageHeader
         title="Terms & Conditions"
         subtitle="Please read these terms carefully. By using MyToDoo you agree to be bound by this Agreement."
@@ -586,7 +586,7 @@ const TermsAndConditions = () => {
 
       <div className="px-4 py-5 space-y-3 pb-10">
 
-        {/* ── Info banner ── */}
+        {/* -- Info banner -- */}
         <div className="bg-blue-50 border border-blue-100 rounded-2xl px-4 py-3 flex gap-3">
           <span className="material-symbols-outlined text-primary text-lg flex-shrink-0 mt-0.5">info</span>
           <p className="text-xs text-blue-800 leading-relaxed">
@@ -594,7 +594,7 @@ const TermsAndConditions = () => {
           </p>
         </div>
 
-        {/* ── Sections Accordion ── */}
+        {/* -- Sections Accordion -- */}
         {tcSections.map((section, index) => (
           <div
             key={index}
@@ -628,7 +628,7 @@ const TermsAndConditions = () => {
           </div>
         ))}
 
-        {/* ── Footer acknowledgement ── */}
+        {/* -- Footer acknowledgement -- */}
         <div className="bg-slate-50 rounded-2xl border border-slate-100 px-4 py-4 space-y-2">
           <div className="flex items-center gap-2">
             <span className="material-symbols-outlined text-slate-500 text-base">verified</span>

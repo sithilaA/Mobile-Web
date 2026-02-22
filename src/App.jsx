@@ -7,6 +7,7 @@ import TermsAndConditions from './pages/TermsAndConditions';
 import FAQ from './pages/FAQ';
 import InsuranceProtection from './pages/InsuranceProtection';
 import CommunityGuideline from './pages/CommunityGuideline';
+import PrivacyPolicy from './pages/PrivacyPolicy';
 
 function App() {
   return (
@@ -25,16 +26,7 @@ function App() {
           <Route path="InsuranceProtection"         element={<InsuranceProtection />} />
           <Route path="CommunityGuideline"          element={<CommunityGuideline />} />
 
-          {/* Privacy Policy – still uses StaticPage until a dedicated page is built */}
-          <Route
-            path="PrivacyPolicy"
-            element={
-              <StaticPage
-                title="Privacy Policy"
-                content="<h2>Privacy Policy</h2><p>Your privacy is important to us. This policy explains how we collect and use your data in accordance with the Privacy Act 1988 (Cth) and the Australian Privacy Principles.</p>"
-              />
-            }
-          />
+          <Route path="PrivacyPolicy" element={<PrivacyPolicy />} />
 
           {/* 404 Route */}
           <Route

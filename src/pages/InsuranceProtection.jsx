@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import LegalPageHeader from '../components/LegalPageHeader';
 
-/* ─────────────────────────────────────────────────────────
+/* ---------------------------------------------------------
    Insurance types for Taskers
-   ───────────────────────────────────────────────────────── */
+   --------------------------------------------------------- */
 const insuranceTypes = [
   {
     icon: 'policy',
@@ -37,9 +37,9 @@ const insuranceTypes = [
   },
 ];
 
-/* ─────────────────────────────────────────────────────────
+/* ---------------------------------------------------------
    Poster Checklist Items
-   ───────────────────────────────────────────────────────── */
+   --------------------------------------------------------- */
 const posterChecklist = [
   { icon: 'badge', text: 'Check the Tasker has a verified profile and relevant badges.' },
   { icon: 'fact_check', text: 'Ask to see evidence of relevant licences or permits before the Task begins.' },
@@ -49,9 +49,9 @@ const posterChecklist = [
   { icon: 'gavel', text: 'For regulated work (electrical, plumbing, etc.), always verify formal licences.' },
 ];
 
-/* ─────────────────────────────────────────────────────────
+/* ---------------------------------------------------------
    FAQs specific to Insurance
-   ───────────────────────────────────────────────────────── */
+   --------------------------------------------------------- */
 const insuranceFaqs = [
   {
     q: 'Does MyToDoo provide insurance cover for Tasks?',
@@ -71,16 +71,16 @@ const insuranceFaqs = [
   },
 ];
 
-/* ─────────────────────────────────────────────────────────
+/* ---------------------------------------------------------
    Component
-   ───────────────────────────────────────────────────────── */
+   --------------------------------------------------------- */
 const InsuranceProtection = () => {
   const [openFaq, setOpenFaq] = useState(null);
   const [activeTab, setActiveTab] = useState('tasker'); // 'tasker' | 'poster'
 
   return (
     <div className="min-h-screen bg-[#F8F9FB]">
-      {/* ── Header ── */}
+      {/* -- Header -- */}
       <LegalPageHeader
         title="Insurance & Protection"
         subtitle="Understand your insurance responsibilities and how to stay protected on the MyToDoo Platform."
@@ -90,7 +90,7 @@ const InsuranceProtection = () => {
 
       <div className="px-4 py-5 pb-10 space-y-4">
 
-        {/* ── Important Notice Banner ── */}
+        {/* -- Important Notice Banner -- */}
         <div className="bg-amber-50 border border-amber-200 rounded-2xl px-4 py-4 flex gap-3">
           <span className="material-symbols-outlined text-amber-500 text-xl flex-shrink-0 mt-0.5">warning</span>
           <div className="space-y-1">
@@ -101,7 +101,7 @@ const InsuranceProtection = () => {
           </div>
         </div>
 
-        {/* ── Tasker / Poster Toggle ── */}
+        {/* -- Tasker / Poster Toggle -- */}
         <div className="flex justify-center">
           <div className="bg-slate-100 p-1 rounded-full flex w-full max-w-[280px]">
             <button
@@ -123,7 +123,7 @@ const InsuranceProtection = () => {
           </div>
         </div>
 
-        {/* ── Tasker View ── */}
+        {/* -- Tasker View -- */}
         {activeTab === 'tasker' && (
           <div className="space-y-4 accordion-content">
             {/* Your responsibilities */}
@@ -149,7 +149,7 @@ const InsuranceProtection = () => {
                 </div>
                 <div className="flex gap-3">
                   <span className="material-symbols-outlined text-primary text-base flex-shrink-0 mt-0.5">check_circle</span>
-                  <p className="text-sm text-gray-600 leading-relaxed">Personally perform all Tasks — you cannot subcontract or delegate work to another person.</p>
+                  <p className="text-sm text-gray-600 leading-relaxed">Personally perform all Tasks  -  you cannot subcontract or delegate work to another person.</p>
                 </div>
               </div>
             </div>
@@ -197,7 +197,7 @@ const InsuranceProtection = () => {
           </div>
         )}
 
-        {/* ── Poster View ── */}
+        {/* -- Poster View -- */}
         {activeTab === 'poster' && (
           <div className="space-y-4 accordion-content">
             {/* Poster notice */}
@@ -219,7 +219,7 @@ const InsuranceProtection = () => {
                 </div>
                 <div className="flex gap-3">
                   <span className="material-symbols-outlined text-primary text-base flex-shrink-0 mt-0.5">check_circle</span>
-                  <p className="text-sm text-gray-600 leading-relaxed">Conduct your own due diligence — MyToDoo does not certify or verify a Tasker's skills, qualifications, or insurance coverage.</p>
+                  <p className="text-sm text-gray-600 leading-relaxed">Conduct your own due diligence  -  MyToDoo does not certify or verify a Tasker's skills, qualifications, or insurance coverage.</p>
                 </div>
               </div>
             </div>
@@ -227,7 +227,7 @@ const InsuranceProtection = () => {
             {/* Poster checklist */}
             <div>
               <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2 px-1">
-                Before You Hire — Checklist
+                Before You Hire  -  Checklist
               </p>
               <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
                 {posterChecklist.map((item, i) => (
@@ -254,7 +254,7 @@ const InsuranceProtection = () => {
           </div>
         )}
 
-        {/* ── Insurance FAQs ── */}
+        {/* -- Insurance FAQs -- */}
         <div>
           <p className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2 px-1">Common Questions</p>
           <div className="space-y-2">
@@ -284,7 +284,7 @@ const InsuranceProtection = () => {
           </div>
         </div>
 
-        {/* ── Refer to T&C ── */}
+        {/* -- Refer to T&C -- */}
         <div className="bg-blue-50 border border-blue-100 rounded-2xl px-4 py-4 flex gap-3">
           <span className="material-symbols-outlined text-primary text-lg flex-shrink-0 mt-0.5">menu_book</span>
           <div>

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import LegalPageHeader from '../components/LegalPageHeader';
 
-/* ─────────────────────────────────────────────────────────
+/* ---------------------------------------------------------
    10 Community Guidelines
-   ───────────────────────────────────────────────────────── */
+   --------------------------------------------------------- */
 const guidelines = [
   {
     number: '1',
@@ -66,7 +66,7 @@ const guidelines = [
     points: [
       'All payments must go through the MyToDoo Platform.',
       'No cash payments, off-platform payments, or arrangements outside the Platform.',
-      'Offers must represent the total price of the Task — no hidden fees or later mark-ups.',
+      'Offers must represent the total price of the Task  -  no hidden fees or later mark-ups.',
     ],
   },
   {
@@ -92,7 +92,7 @@ const guidelines = [
     points: [
       'Identity verification is required for all Users.',
       'Optional checks (such as police checks or Working with Children Checks) may be required.',
-      'Do not misuse badges or verification tools — providing false information is grounds for suspension.',
+      'Do not misuse badges or verification tools  -  providing false information is grounds for suspension.',
     ],
   },
   {
@@ -139,9 +139,9 @@ const guidelines = [
   },
 ];
 
-/* ─────────────────────────────────────────────────────────
+/* ---------------------------------------------------------
    Component
-   ───────────────────────────────────────────────────────── */
+   --------------------------------------------------------- */
 const CommunityGuideline = () => {
   const [openIndex, setOpenIndex] = useState(null);
 
@@ -149,17 +149,17 @@ const CommunityGuideline = () => {
 
   return (
     <div className="min-h-screen bg-[#F8F9FB]">
-      {/* ── Header ── */}
+      {/* -- Header -- */}
       <LegalPageHeader
         title="Community Guidelines"
-        subtitle="How we expect all Users to behave on the MyToDoo Platform — keeping our community safe, fair, and respectful."
+        subtitle="How we expect all Users to behave on the MyToDoo Platform  -  keeping our community safe, fair, and respectful."
         badge="Part of Terms & Conditions"
         badgeColor="bg-violet-50 text-violet-700"
       />
 
       <div className="px-4 py-5 pb-10 space-y-3">
 
-        {/* ── Intro card ── */}
+        {/* -- Intro card -- */}
         <div className="bg-gradient-to-br from-[#6366f1] to-[#a855f7] rounded-2xl px-5 py-5 text-white">
           <div className="flex items-start gap-3">
             <span className="material-symbols-outlined text-white/80 text-2xl flex-shrink-0">groups</span>
@@ -172,7 +172,7 @@ const CommunityGuideline = () => {
           </div>
         </div>
 
-        {/* ── Guidelines Accordion ── */}
+        {/* -- Guidelines Accordion -- */}
         {guidelines.map((guideline, index) => {
           const isOpen = openIndex === index;
           return (
@@ -208,7 +208,7 @@ const CommunityGuideline = () => {
               {isOpen && (
                 <div className="px-4 pb-4 pt-1 border-t border-gray-50 accordion-content">
                   {guideline.isProhibited ? (
-                    /* Prohibited behaviour — warning style list */
+                    /* Prohibited behaviour  -  warning style list */
                     <div className="space-y-2 mt-1">
                       <p className="text-xs font-semibold text-rose-600 mb-2">
                         The following conduct is <strong>not permitted</strong> on the Platform:
@@ -236,7 +236,7 @@ const CommunityGuideline = () => {
           );
         })}
 
-        {/* ── Remember card ── */}
+        {/* -- Remember card -- */}
         <div className="bg-emerald-50 border border-emerald-100 rounded-2xl px-4 py-4 space-y-2">
           <div className="flex items-center gap-2">
             <span className="material-symbols-outlined text-emerald-500 text-lg">lightbulb</span>
@@ -247,7 +247,7 @@ const CommunityGuideline = () => {
           </p>
         </div>
 
-        {/* ── Consequences notice ── */}
+        {/* -- Consequences notice -- */}
         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm px-4 py-4 space-y-2">
           <div className="flex items-center gap-2">
             <span className="material-symbols-outlined text-slate-400 text-base">gavel</span>

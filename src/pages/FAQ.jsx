@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import LegalPageHeader from '../components/LegalPageHeader';
 
-/* ─────────────────────────────────────────────────────────
-   FAQ Data  –  7 categories, 30+ Q&A pairs
-   ───────────────────────────────────────────────────────── */
+/* ---------------------------------------------------------
+   FAQ Data  -  7 categories, 30+ Q&A pairs
+   --------------------------------------------------------- */
 const faqCategories = [
   {
     id: 'getting-started',
@@ -15,7 +15,7 @@ const faqCategories = [
     items: [
       {
         q: 'What is MyToDoo?',
-        a: 'MyToDoo is an online marketplace that connects people who need services (called "Posters") with people who provide them (called "Taskers"). You can post tasks, browse offers, and complete work safely — all through our secure Platform.',
+        a: 'MyToDoo is an online marketplace that connects people who need services (called "Posters") with people who provide them (called "Taskers"). You can post tasks, browse offers, and complete work safely  -  all through our secure Platform.',
       },
       {
         q: 'Who can use MyToDoo?',
@@ -53,7 +53,7 @@ const faqCategories = [
       },
       {
         q: 'How do I make sure a Tasker is qualified?',
-        a: 'MyToDoo verifies identities but does not certify skills or qualifications. It is your responsibility as a Poster to conduct your own due diligence — check references, ask for evidence of licences, and confirm insurance where relevant.',
+        a: 'MyToDoo verifies identities but does not certify skills or qualifications. It is your responsibility as a Poster to conduct your own due diligence  -  check references, ask for evidence of licences, and confirm insurance where relevant.',
       },
       {
         q: 'What happens if a Task is not completed satisfactorily?',
@@ -79,11 +79,11 @@ const faqCategories = [
       },
       {
         q: 'How does the Tasker Service Fee work?',
-        a: 'The fee is deducted from the Agreed Price before the Tasker receives payment. It operates on a tiered structure based on the Tasker\'s total completed earnings in the previous 30 days:\n• Grasshopper (under $799): 15% + GST\n• P-Plater ($800–$2,499): 13% + GST\n• Expert ($2,500–$4,999): 11% + GST\n• Grandmaster ($5,000+): 9% + GST',
+        a: 'The fee is deducted from the Agreed Price before the Tasker receives payment. It operates on a tiered structure based on the Tasker\'s total completed earnings in the previous 30 days:\n- Grasshopper (under $799): 15% + GST\n- P-Plater ($800-$2,499): 13% + GST\n- Expert ($2,500-$4,999): 11% + GST\n- Grandmaster ($5,000+): 9% + GST',
       },
       {
         q: 'Can I pay or receive payment outside the Platform?',
-        a: 'No. All payments must be made through the MyToDoo Platform. Off-platform payments — including cash — are a breach of our Terms and may result in suspension or termination of your account.',
+        a: 'No. All payments must be made through the MyToDoo Platform. Off-platform payments  -  including cash  -  are a breach of our Terms and may result in suspension or termination of your account.',
       },
       {
         q: 'What are MyToDoo Credits?',
@@ -91,7 +91,7 @@ const faqCategories = [
       },
       {
         q: 'What are MyToDoo Points?',
-        a: 'Points are loyalty rewards issued for engagement activities like referrals, reviews, and promotions. They can be redeemed on the Platform and are not redeemable for cash. Points may expire (typically within 6–12 months) as notified at the time of issue.',
+        a: 'Points are loyalty rewards issued for engagement activities like referrals, reviews, and promotions. They can be redeemed on the Platform and are not redeemable for cash. Points may expire (typically within 6-12 months) as notified at the time of issue.',
       },
     ],
   },
@@ -113,7 +113,7 @@ const faqCategories = [
       },
       {
         q: 'How do refunds work?',
-        a: 'Refunds of the Agreed Price are ordinarily issued as MyToDoo Credits. You may request a refund to your original payment method, and MyToDoo may approve or refuse this at its discretion — subject always to your rights under the Australian Consumer Law.',
+        a: 'Refunds of the Agreed Price are ordinarily issued as MyToDoo Credits. You may request a refund to your original payment method, and MyToDoo may approve or refuse this at its discretion  -  subject always to your rights under the Australian Consumer Law.',
       },
       {
         q: 'What happens if a task is unresolved after 30 days?',
@@ -139,7 +139,7 @@ const faqCategories = [
       },
       {
         q: 'What should I check before hiring a Tasker?',
-        a: 'Before hiring, check that the Tasker has the required licences, permits, and qualifications for the Task. You should also ask about their insurance coverage — especially for higher-risk tasks like electrical work, plumbing, or working at heights.',
+        a: 'Before hiring, check that the Tasker has the required licences, permits, and qualifications for the Task. You should also ask about their insurance coverage  -  especially for higher-risk tasks like electrical work, plumbing, or working at heights.',
       },
       {
         q: 'Can MyToDoo require a Tasker to show proof of insurance?',
@@ -205,9 +205,9 @@ const faqCategories = [
   },
 ];
 
-/* ─────────────────────────────────────────────────────────
+/* ---------------------------------------------------------
    Component
-   ───────────────────────────────────────────────────────── */
+   --------------------------------------------------------- */
 const FAQ = () => {
   const [openItem, setOpenItem] = useState(null);  // "catIndex-itemIndex"
   const [activeCategory, setActiveCategory] = useState('all');
@@ -221,7 +221,7 @@ const FAQ = () => {
 
   return (
     <div className="min-h-screen bg-[#F8F9FB]">
-      {/* ── Header ── */}
+      {/* -- Header -- */}
       <LegalPageHeader
         title="Frequently Asked Questions"
         subtitle="Find quick answers to common questions about using the MyToDoo Platform."
@@ -231,7 +231,7 @@ const FAQ = () => {
 
       <div className="px-4 py-5 pb-10 space-y-4">
 
-        {/* ── Category Filter Scroll ── */}
+        {/* -- Category Filter Scroll -- */}
         <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1 scrollbar-hide">
           <button
             onClick={() => setActiveCategory('all')}
@@ -259,7 +259,7 @@ const FAQ = () => {
           ))}
         </div>
 
-        {/* ── FAQ Sections ── */}
+        {/* -- FAQ Sections -- */}
         {visibleCategories.map((category, catIdx) => {
           const realCatIdx = faqCategories.findIndex((c) => c.id === category.id);
           return (
@@ -302,7 +302,7 @@ const FAQ = () => {
           );
         })}
 
-        {/* ── Contact Support CTA ── */}
+        {/* -- Contact Support CTA -- */}
         <div className="bg-gradient-to-br from-[#007AFF] to-[#5856D6] rounded-2xl p-5 text-white text-center space-y-2">
           <span className="material-symbols-outlined text-3xl text-white/80">support_agent</span>
           <p className="text-sm font-bold">Still have questions?</p>
