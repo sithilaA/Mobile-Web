@@ -23,3 +23,77 @@ body {
 .material-symbols-outlined {
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 }
+
+/* ── Legal Content Styles ─────────────────────────────── */
+.legal-content h3 {
+  font-weight: 600;
+  color: #334155;
+  font-size: 0.8125rem;
+  margin-top: 14px;
+  margin-bottom: 5px;
+}
+.legal-content p {
+  color: #475569;
+  font-size: 0.8125rem;
+  line-height: 1.65;
+  margin-bottom: 6px;
+}
+.legal-content ul {
+  list-style-type: disc;
+  padding-left: 1.1rem;
+  margin-bottom: 8px;
+}
+.legal-content ol {
+  list-style-type: decimal;
+  padding-left: 1.1rem;
+  margin-bottom: 8px;
+}
+.legal-content li {
+  color: #475569;
+  font-size: 0.8125rem;
+  line-height: 1.65;
+  margin-bottom: 4px;
+}
+.legal-content ol.roman {
+  list-style-type: lower-roman;
+  padding-left: 1.3rem;
+}
+.legal-content .note-box {
+  background: #eff6ff;
+  border-left: 3px solid #007AFF;
+  padding: 10px 12px;
+  border-radius: 8px;
+  margin-top: 10px;
+  font-size: 0.8125rem;
+  color: #1e40af;
+  line-height: 1.55;
+}
+.legal-content .fee-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 8px 0;
+  font-size: 0.8125rem;
+}
+.legal-content .fee-table th {
+  background: #f1f5f9;
+  padding: 7px 10px;
+  text-align: left;
+  font-weight: 600;
+  color: #334155;
+  border-bottom: 1px solid #e2e8f0;
+  font-size: 0.75rem;
+}
+.legal-content .fee-table td {
+  padding: 7px 10px;
+  color: #475569;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+/* Accordion animation */
+.accordion-content {
+  animation: accordionOpen 0.2s ease-out;
+}
+@keyframes accordionOpen {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}

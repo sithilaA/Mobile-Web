@@ -3,63 +3,50 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import Layout from './components/Layout';
 import PaymentDetails from './pages/PaymentDetails';
 import StaticPage from './pages/StaticPage';
+import TermsAndConditions from './pages/TermsAndConditions';
+import FAQ from './pages/FAQ';
+import InsuranceProtection from './pages/InsuranceProtection';
+import CommunityGuideline from './pages/CommunityGuideline';
 
 function App() {
-  const staticContent = {
-    terms: `<h2>Terms and Conditions</h2>
-            <p>Welcome to our app. By using our services, you agree to these terms...</p>
-            <h3>1. Introduction</h3>
-            <p>These terms govern your use of our application...</p>`,
-    privacy: `<h2>Privacy Policy</h2>
-              <p>Your privacy is important to us. This policy explains how we collect and use your data.</p>`,
-    insurance: `<h2>Insurance Protection</h2>
-                <p>We provide comprehensive insurance coverage for all verified tasks...</p>`,
-    community: `<h2>Community Guidelines</h2>
-                <p>Respect others and follow our community standards to ensure a safe environment for everyone.</p>`,
-    faq: `<h2>Frequently Asked Questions</h2>
-          <details><summary>How do I reset my password?</summary><p>Go to settings and click reset password.</p></details>
-          <details><summary>Is my payment secure?</summary><p>Yes, we use industry-standard encryption.</p></details>`
-  };
-
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Layout />}>
-          {/* Default Route - Redirect to FAQ or a Home page if needed */}
+          {/* Default Route */}
           <Route index element={<Navigate to="/FrequentlyAskedQuestions" replace />} />
 
           {/* Payment Details - Auth required (via window.APP_AUTH_TOKEN) */}
           <Route path="payment-details" element={<PaymentDetails />} />
 
-          {/* Static Pages */}
-          <Route
-            path="TermsAndConditions"
-            element={<StaticPage title="Terms & Conditions" content={staticContent.terms} />}
-          />
+          {/* Legal & Info Pages */}
+          <Route path="TermsAndConditions"          element={<TermsAndConditions />} />
+          <Route path="FrequentlyAskedQuestions"    element={<FAQ />} />
+          <Route path="InsuranceProtection"         element={<InsuranceProtection />} />
+          <Route path="CommunityGuideline"          element={<CommunityGuideline />} />
+
+          {/* Privacy Policy – still uses StaticPage until a dedicated page is built */}
           <Route
             path="PrivacyPolicy"
-            element={<StaticPage title="Privacy Policy" content={staticContent.privacy} />}
-          />
-          <Route
-            path="InsuranceProtection"
-            element={<StaticPage title="Insurance Protection" content={staticContent.insurance} />}
-          />
-          <Route
-            path="CommunityGuideline"
-            element={<StaticPage title="Community Guidelines" content={staticContent.community} />}
-          />
-          <Route
-            path="FrequentlyAskedQuestions"
-            element={<StaticPage title="FAQ" content={staticContent.faq} />}
+            element={
+              <StaticPage
+                title="Privacy Policy"
+                content="<h2>Privacy Policy</h2><p>Your privacy is important to us. This policy explains how we collect and use your data in accordance with the Privacy Act 1988 (Cth) and the Australian Privacy Principles.</p>"
+              />
+            }
           />
 
           {/* 404 Route */}
-          <Route path="*" element={
-            <div className="p-4 text-center">
-              <h2 className="text-xl font-bold">Page Not Found</h2>
-              <p className="mt-2 text-gray-600">The requested page could not be found.</p>
-            </div>
-          } />
+          <Route
+            path="*"
+            element={
+              <div className="p-6 text-center space-y-2">
+                <span className="material-symbols-outlined text-gray-300 text-5xl">search_off</span>
+                <h2 className="text-lg font-bold text-gray-800">Page Not Found</h2>
+                <p className="text-sm text-gray-500">The requested page could not be found.</p>
+              </div>
+            }
+          />
         </Route>
       </Routes>
     </Router>
