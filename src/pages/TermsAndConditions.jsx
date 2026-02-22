@@ -10,7 +10,7 @@ const tcSections = [
     title: 'Introduction',
     content: `
       <h3>1.1 Agreement Overview</h3>
-      <p>These Terms and Conditions ("Agreement") govern your access to and use of the MyToDoo website, mobile application and related services (together, the "Platform"). The Platform is operated by [Name of the Company] (ACN [..................]) ("MyToDoo", "we", "our" or "us").</p>
+      <p>These Terms and Conditions ("Agreement") govern your access to and use of the MyToDoo website, mobile application and related services .</p>
       <h3>1.2 Acceptance of Terms</h3>
       <p>By creating an account, posting a task, making or accepting an offer, or otherwise using the Platform, you agree to be bound by this Agreement, together with our Privacy Policy, Community Guidelines and any other policies published on the Platform (collectively, the "Policies"). If you do not agree, you must not use the Platform.</p>
       <h3>1.3 Nature of Platform</h3>

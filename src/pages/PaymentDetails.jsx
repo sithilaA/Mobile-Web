@@ -16,7 +16,7 @@ const PaymentDetails = () => {
     const [loadingMore, setLoadingMore] = useState(false);
     const [retryCount, setRetryCount] = useState(0);
 
-    const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'https://api.example.com';
+    const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'https://au-live-api.mytodoo.com/api';
 
     const getToken = () => window.APP_AUTH_TOKEN;
 

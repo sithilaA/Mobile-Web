@@ -1,306 +1,260 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import axios from 'axios';
 import LegalPageHeader from '../components/LegalPageHeader';
 
 /* ---------------------------------------------------------
-   FAQ Data  -  7 categories, 30+ Q&A pairs
+   Category -> icon / colour mapping.
+   Admin can create any category name from the panel;
+   unmapped categories fall back to DEFAULT_STYLE.
    --------------------------------------------------------- */
-const faqCategories = [
-  {
-    id: 'getting-started',
-    icon: 'rocket_launch',
-    label: 'Getting Started',
-    color: 'text-violet-600',
-    bgColor: 'bg-violet-50',
-    borderColor: 'border-violet-100',
-    items: [
-      {
-        q: 'What is MyToDoo?',
-        a: 'MyToDoo is an online marketplace that connects people who need services (called "Posters") with people who provide them (called "Taskers"). You can post tasks, browse offers, and complete work safely  -  all through our secure Platform.',
-      },
-      {
-        q: 'Who can use MyToDoo?',
-        a: 'Anyone who is at least 18 years old and has the legal capacity to enter into binding contracts can create an account. By registering, you confirm that you meet these eligibility requirements.',
-      },
-      {
-        q: 'How do I create an account?',
-        a: 'Download the MyToDoo app or visit our website, tap "Sign Up," and follow the prompts to register. You\'ll need to provide accurate personal information and complete identity verification.',
-      },
-      {
-        q: 'What is the difference between a Poster and a Tasker?',
-        a: 'A Poster creates and publishes a task they need help with. A Tasker responds to a Posted Task with an Offer to perform it. The same person can be both a Poster and a Tasker on the Platform.',
-      },
-    ],
-  },
-  {
-    id: 'tasks-services',
-    icon: 'task_alt',
-    label: 'Tasks & Services',
-    color: 'text-emerald-600',
-    bgColor: 'bg-emerald-50',
-    borderColor: 'border-emerald-100',
-    items: [
-      {
-        q: 'What types of tasks can I post?',
-        a: 'You can post a wide range of lawful services, including home maintenance, cleaning, gardening, painting, plumbing (by licensed providers), electrical work, IT support, delivery and removalist services, and other personal or business services.',
-      },
-      {
-        q: 'What tasks are not allowed on the Platform?',
-        a: 'Prohibited tasks include anything unlawful or illegal; services requiring a licence the Tasker doesn\'t hold; hazardous activities without proper controls; regulated industry services (child care, healthcare, finance, legal) without proper authorisation; and any arrangement to pay outside the Platform.',
-      },
-      {
-        q: 'Can a Tasker subcontract work to someone else?',
-        a: 'No. Taskers must personally perform the services agreed in a Task Contract. Subcontracting or delegating a Task to another person is a breach of our Terms and may result in account termination.',
-      },
-      {
-        q: 'How do I make sure a Tasker is qualified?',
-        a: 'MyToDoo verifies identities but does not certify skills or qualifications. It is your responsibility as a Poster to conduct your own due diligence  -  check references, ask for evidence of licences, and confirm insurance where relevant.',
-      },
-      {
-        q: 'What happens if a Task is not completed satisfactorily?',
-        a: 'You should first try to resolve it directly with the Tasker. If unresolved, you can raise a concern with MyToDoo through the support channels. MyToDoo may review the circumstances and make a non-binding determination about held funds.',
-      },
-    ],
-  },
-  {
-    id: 'payments-fees',
-    icon: 'payments',
-    label: 'Payments & Fees',
-    color: 'text-primary',
-    bgColor: 'bg-blue-50',
-    borderColor: 'border-blue-100',
-    items: [
-      {
-        q: 'How does payment work on MyToDoo?',
-        a: 'When you accept a Tasker\'s Offer, you pay the Agreed Price (plus the Connection Fee) into a secure escrow account managed by our payment partner, Stripe. The funds are held until the Task is completed, then released to the Tasker.',
-      },
-      {
-        q: 'What is the Connection Fee?',
-        a: 'The Connection Fee is paid by the Poster at the time they accept a Tasker\'s Offer. It covers the cost of connecting Posters and Taskers through our Platform and is non-refundable in all circumstances (except as required by Australian Consumer Law).',
-      },
-      {
-        q: 'How does the Tasker Service Fee work?',
-        a: 'The fee is deducted from the Agreed Price before the Tasker receives payment. It operates on a tiered structure based on the Tasker\'s total completed earnings in the previous 30 days:\n- Grasshopper (under $799): 15% + GST\n- P-Plater ($800-$2,499): 13% + GST\n- Expert ($2,500-$4,999): 11% + GST\n- Grandmaster ($5,000+): 9% + GST',
-      },
-      {
-        q: 'Can I pay or receive payment outside the Platform?',
-        a: 'No. All payments must be made through the MyToDoo Platform. Off-platform payments  -  including cash  -  are a breach of our Terms and may result in suspension or termination of your account.',
-      },
-      {
-        q: 'What are MyToDoo Credits?',
-        a: 'Credits are prepaid value issued to you on the Platform, usually as a result of refunds or cancellations. They can be used to pay for future Tasks. Credits are valid for at least 3 years from the date of issue and are non-transferable.',
-      },
-      {
-        q: 'What are MyToDoo Points?',
-        a: 'Points are loyalty rewards issued for engagement activities like referrals, reviews, and promotions. They can be redeemed on the Platform and are not redeemable for cash. Points may expire (typically within 6-12 months) as notified at the time of issue.',
-      },
-    ],
-  },
-  {
-    id: 'cancellations-refunds',
-    icon: 'undo',
-    label: 'Cancellations & Refunds',
-    color: 'text-amber-600',
-    bgColor: 'bg-amber-50',
-    borderColor: 'border-amber-100',
-    items: [
-      {
-        q: 'What happens if a Poster cancels a task?',
-        a: 'If you cancel after accepting an Offer, the Connection Fee is retained by MyToDoo. The Agreed Price may be refunded to you as MyToDoo Credits, unless the Australian Consumer Law requires a refund to your original payment method.',
-      },
-      {
-        q: 'What happens if a Tasker cancels?',
-        a: 'If a Tasker cancels after their Offer has been accepted, they will be charged a cancellation fee equal to the Connection Fee. This fee may be deducted from future payouts.',
-      },
-      {
-        q: 'How do refunds work?',
-        a: 'Refunds of the Agreed Price are ordinarily issued as MyToDoo Credits. You may request a refund to your original payment method, and MyToDoo may approve or refuse this at its discretion  -  subject always to your rights under the Australian Consumer Law.',
-      },
-      {
-        q: 'What happens if a task is unresolved after 30 days?',
-        a: 'If a Task is not resolved within 30 days of the Tasker marking it complete, the Poster may choose to cancel or extend the Task. If no action is taken, funds will be automatically released to the Tasker.',
-      },
-    ],
-  },
-  {
-    id: 'insurance-safety',
-    icon: 'shield',
-    label: 'Insurance & Safety',
-    color: 'text-rose-600',
-    bgColor: 'bg-rose-50',
-    borderColor: 'border-rose-100',
-    items: [
-      {
-        q: 'Does MyToDoo provide insurance?',
-        a: 'No. MyToDoo does not provide any insurance to Users. Taskers are solely responsible for obtaining and maintaining all necessary insurance, and Posters should make their own enquiries about a Tasker\'s insurance before engaging them.',
-      },
-      {
-        q: 'What insurance should a Tasker have?',
-        a: 'Taskers are responsible for holding appropriate insurance for the services they perform. This may include public liability insurance, workers\' compensation (if applicable), and any other legally required or industry-standard coverage depending on the type of Task.',
-      },
-      {
-        q: 'What should I check before hiring a Tasker?',
-        a: 'Before hiring, check that the Tasker has the required licences, permits, and qualifications for the Task. You should also ask about their insurance coverage  -  especially for higher-risk tasks like electrical work, plumbing, or working at heights.',
-      },
-      {
-        q: 'Can MyToDoo require a Tasker to show proof of insurance?',
-        a: 'Yes. MyToDoo may, at its discretion, require Taskers to provide evidence of insurance before accepting or performing certain categories of Tasks. Failure to provide evidence may result in suspension or cancellation of the Task or account.',
-      },
-    ],
-  },
-  {
-    id: 'disputes-support',
-    icon: 'support_agent',
-    label: 'Disputes & Support',
-    color: 'text-purple-600',
-    bgColor: 'bg-purple-50',
-    borderColor: 'border-purple-100',
-    items: [
-      {
-        q: 'What should I do if I have a dispute?',
-        a: 'First, try to resolve the matter directly with the other User. If that fails, you can raise it with MyToDoo through the support channels on the Platform. MyToDoo may review the circumstances and make a non-binding determination about escrow funds.',
-      },
-      {
-        q: 'What can MyToDoo do to help with disputes?',
-        a: 'MyToDoo can informally facilitate communication and, at its discretion, make a determination about held funds. However, MyToDoo is not a party to any Task Contract and cannot arbitrate legally. Either party may pursue the matter through consumer protection authorities or courts.',
-      },
-      {
-        q: 'How do I escalate a dispute externally?',
-        a: 'If a dispute remains unresolved after the internal process, you may escalate to the relevant consumer protection authority, small claims tribunal, or court. Escalation may only occur after completing MyToDoo\'s internal dispute resolution process.',
-      },
-      {
-        q: 'How do I report inappropriate behaviour?',
-        a: 'Use the report function within the Platform or contact our support team. MyToDoo may investigate and take action, including removing content, suspending accounts, or reporting unlawful conduct to authorities.',
-      },
-    ],
-  },
-  {
-    id: 'account-privacy',
-    icon: 'manage_accounts',
-    label: 'Account & Privacy',
-    color: 'text-slate-600',
-    bgColor: 'bg-slate-50',
-    borderColor: 'border-slate-100',
-    items: [
-      {
-        q: 'How does identity verification work?',
-        a: 'MyToDoo may require you to verify your identity using third-party providers (such as RatifyID). This may involve providing government-issued ID, proof of address, or other documentation. Additional optional checks (like police checks) may also be available.',
-      },
-      {
-        q: 'What are badges?',
-        a: 'Badges are digital indicators shown on your profile to reflect that you have completed a form of verification. They are based on information available at a point in time and may not remain current. MyToDoo can withdraw badges at any time.',
-      },
-      {
-        q: 'How do I close my account?',
-        a: 'You can terminate your account at any time through the account settings on the Platform. Note that termination doesn\'t cancel existing Task Contracts or relieve you of outstanding obligations.',
-      },
-      {
-        q: 'How is my personal information protected?',
-        a: 'MyToDoo handles your personal information in accordance with the Privacy Act 1988 (Cth) and our Privacy Policy. We may share data with third-party service providers (such as payment processors and identity verification providers) as necessary to operate the Platform.',
-      },
-      {
-        q: 'Can I use the Platform if my account was terminated?',
-        a: 'If your account is terminated or suspended by MyToDoo, you must not create another account without our prior written consent. Doing so would be a further breach of our Terms.',
-      },
-    ],
-  },
+const CATEGORY_STYLES = {
+  'General':                 { icon: 'rocket_launch',   color: 'text-violet-600', bgColor: 'bg-violet-50',  borderColor: 'border-violet-100' },
+  'Getting Started':         { icon: 'rocket_launch',   color: 'text-violet-600', bgColor: 'bg-violet-50',  borderColor: 'border-violet-100' },
+  'Tasks & Services':        { icon: 'task_alt',        color: 'text-emerald-600',bgColor: 'bg-emerald-50', borderColor: 'border-emerald-100' },
+  'Payments & Fees':         { icon: 'payments',        color: 'text-primary',    bgColor: 'bg-blue-50',    borderColor: 'border-blue-100' },
+  'Cancellations & Refunds': { icon: 'undo',            color: 'text-amber-600',  bgColor: 'bg-amber-50',   borderColor: 'border-amber-100' },
+  'Insurance & Safety':      { icon: 'shield',          color: 'text-rose-600',   bgColor: 'bg-rose-50',    borderColor: 'border-rose-100' },
+  'Disputes & Support':      { icon: 'support_agent',   color: 'text-purple-600', bgColor: 'bg-purple-50',  borderColor: 'border-purple-100' },
+  'Account & Privacy':       { icon: 'manage_accounts', color: 'text-slate-600',  bgColor: 'bg-slate-50',   borderColor: 'border-slate-100' },
+};
+const DEFAULT_STYLE = {
+  icon: 'help_outline',
+  color: 'text-gray-600',
+  bgColor: 'bg-gray-50',
+  borderColor: 'border-gray-100',
+};
+
+/* ---------------------------------------------------------
+   Role filter pills
+   --------------------------------------------------------- */
+const ROLE_FILTERS = [
+  { value: 'all',    label: 'All',    icon: 'groups' },
+  { value: 'poster', label: 'Poster', icon: 'post_add' },
+  { value: 'tasker', label: 'Tasker', icon: 'handyman' },
 ];
 
 /* ---------------------------------------------------------
-   Component
+   Main FAQ Component
    --------------------------------------------------------- */
 const FAQ = () => {
-  const [openItem, setOpenItem] = useState(null);  // "catIndex-itemIndex"
+  const [articles, setArticles]           = useState([]);
+  const [loading, setLoading]             = useState(true);
+  const [error, setError]                 = useState(null);
+  const [openItem, setOpenItem]           = useState(null);   // "catName-itemIndex"
   const [activeCategory, setActiveCategory] = useState('all');
+  const [activeRole, setActiveRole]       = useState('all');  // 'all' | 'poster' | 'tasker'
+
+  const apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'https://au-live-api.mytodoo.com/api';
+
+  /* ---- fetch from API ---- */
+  const fetchArticles = useCallback(async (role) => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const params = {};
+      if (role !== 'all') params.role = role;
+
+      const res = await axios.get(`${apiBaseUrl}/help-support`, { params });
+      const data = res.data?.data || [];
+      // sort by the admin-defined order field
+      data.sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+      setArticles(data);
+    } catch (err) {
+      console.error('FAQ fetch error:', err);
+      setError('Could not load help articles. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  }, [apiBaseUrl]);
+
+  useEffect(() => {
+    fetchArticles(activeRole);
+  }, [activeRole, fetchArticles]);
+
+  /* ---- group by category ---- */
+  const grouped = articles.reduce((acc, article) => {
+    if (!article.isActive) return acc;
+    const cat = article.category || 'General';
+    if (!acc[cat]) acc[cat] = [];
+    acc[cat].push(article);
+    return acc;
+  }, {});
+
+  const categories = Object.keys(grouped).map((name) => ({
+    name,
+    items: grouped[name],
+    style: CATEGORY_STYLES[name] || DEFAULT_STYLE,
+  }));
 
   const toggle = (key) => setOpenItem(openItem === key ? null : key);
 
   const visibleCategories =
     activeCategory === 'all'
-      ? faqCategories
-      : faqCategories.filter((c) => c.id === activeCategory);
+      ? categories
+      : categories.filter((c) => c.name === activeCategory);
 
+  /* ---- Loading skeleton ---- */
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#F8F9FB]">
+        <LegalPageHeader
+          title="Frequently Asked Questions"
+          subtitle="Find quick answers to common questions about the MyToDoo Platform."
+          badge="Help Centre"
+          badgeColor="bg-emerald-50 text-emerald-700"
+        />
+        <div className="px-4 py-5 space-y-4">
+          {[1, 2, 3, 4, 5].map((i) => (
+            <div key={i} className="bg-white rounded-2xl border border-gray-100 p-4 animate-pulse">
+              <div className="h-4 bg-gray-200 rounded w-3/4 mb-2" />
+              <div className="h-3 bg-gray-100 rounded w-1/2" />
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  /* ---- Error state ---- */
+  if (error) {
+    return (
+      <div className="min-h-screen bg-[#F8F9FB]">
+        <LegalPageHeader
+          title="Frequently Asked Questions"
+          subtitle="Find quick answers to common questions about the MyToDoo Platform."
+          badge="Help Centre"
+          badgeColor="bg-emerald-50 text-emerald-700"
+        />
+        <div className="px-4 py-10 flex flex-col items-center text-center space-y-4">
+          <span className="material-symbols-outlined text-4xl text-red-400">wifi_off</span>
+          <p className="text-sm font-semibold text-gray-700">{error}</p>
+          <button
+            onClick={() => fetchArticles(activeRole)}
+            className="mt-2 bg-primary text-white text-sm font-semibold px-5 py-2.5 rounded-xl active:opacity-80"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  /* ---- Main render ---- */
   return (
     <div className="min-h-screen bg-[#F8F9FB]">
+
       {/* -- Header -- */}
       <LegalPageHeader
         title="Frequently Asked Questions"
-        subtitle="Find quick answers to common questions about using the MyToDoo Platform."
+        subtitle="Find quick answers to common questions about the MyToDoo Platform."
         badge="Help Centre"
         badgeColor="bg-emerald-50 text-emerald-700"
       />
 
       <div className="px-4 py-5 pb-10 space-y-4">
 
-        {/* -- Category Filter Scroll -- */}
-        <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1 scrollbar-hide">
-          <button
-            onClick={() => setActiveCategory('all')}
-            className={`flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold border transition-colors ${
-              activeCategory === 'all'
-                ? 'bg-primary text-white border-primary'
-                : 'bg-white text-gray-600 border-gray-200'
-            }`}
-          >
-            All Topics
-          </button>
-          {faqCategories.map((cat) => (
+        {/* -- Role Filter (All / Poster / Tasker) -- */}
+        <div className="flex gap-2">
+          {ROLE_FILTERS.map((r) => (
             <button
-              key={cat.id}
-              onClick={() => setActiveCategory(cat.id)}
-              className={`flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border transition-colors ${
-                activeCategory === cat.id
+              key={r.value}
+              onClick={() => {
+                setActiveRole(r.value);
+                setActiveCategory('all');
+                setOpenItem(null);
+              }}
+              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border transition-colors ${
+                activeRole === r.value
                   ? 'bg-primary text-white border-primary'
                   : 'bg-white text-gray-600 border-gray-200'
               }`}
             >
-              <span className="material-symbols-outlined text-[13px]">{cat.icon}</span>
-              {cat.label}
+              <span className="material-symbols-outlined text-[13px]">{r.icon}</span>
+              {r.label}
             </button>
           ))}
         </div>
 
-        {/* -- FAQ Sections -- */}
-        {visibleCategories.map((category, catIdx) => {
-          const realCatIdx = faqCategories.findIndex((c) => c.id === category.id);
-          return (
-            <div key={category.id} className="space-y-2">
-              {/* Category heading */}
-              <div className={`flex items-center gap-2 px-3 py-2 rounded-xl ${category.bgColor} border ${category.borderColor}`}>
-                <span className={`material-symbols-outlined text-base ${category.color}`}>{category.icon}</span>
-                <p className={`text-xs font-bold ${category.color}`}>{category.label}</p>
-              </div>
+        {/* -- Category Filter Scroll -- */}
+        {categories.length > 0 && (
+          <div className="flex gap-2 overflow-x-auto pb-1 -mx-1 px-1 scrollbar-hide">
+            <button
+              onClick={() => setActiveCategory('all')}
+              className={`flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold border transition-colors ${
+                activeCategory === 'all'
+                  ? 'bg-primary text-white border-primary'
+                  : 'bg-white text-gray-600 border-gray-200'
+              }`}
+            >
+              All Topics
+            </button>
+            {categories.map((cat) => (
+              <button
+                key={cat.name}
+                onClick={() => setActiveCategory(cat.name)}
+                className={`flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold border transition-colors ${
+                  activeCategory === cat.name
+                    ? 'bg-primary text-white border-primary'
+                    : 'bg-white text-gray-600 border-gray-200'
+                }`}
+              >
+                <span className="material-symbols-outlined text-[13px]">{cat.style.icon}</span>
+                {cat.name}
+              </button>
+            ))}
+          </div>
+        )}
 
-              {/* Q&A items */}
-              {category.items.map((item, itemIdx) => {
-                const key = `${realCatIdx}-${itemIdx}`;
-                const isOpen = openItem === key;
-                return (
-                  <div
-                    key={itemIdx}
-                    className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden"
-                  >
-                    <button
-                      onClick={() => toggle(key)}
-                      className="w-full flex items-start justify-between px-4 py-4 text-left active:bg-gray-50 transition-colors gap-3"
-                    >
-                      <p className="text-sm font-semibold text-gray-800 leading-snug flex-1">{item.q}</p>
-                      <span
-                        className={`material-symbols-outlined text-gray-400 flex-shrink-0 text-xl transition-transform duration-200 mt-0.5 ${isOpen ? 'rotate-180' : ''}`}
-                      >
-                        expand_more
-                      </span>
-                    </button>
-                    {isOpen && (
-                      <div className="px-4 pb-4 pt-1 border-t border-gray-50 accordion-content">
-                        <p className="text-sm text-gray-600 leading-relaxed whitespace-pre-line">{item.a}</p>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
+        {/* -- Empty state -- */}
+        {visibleCategories.length === 0 && (
+          <div className="py-16 flex flex-col items-center text-center space-y-2">
+            <span className="material-symbols-outlined text-4xl text-gray-300">search_off</span>
+            <p className="text-sm font-semibold text-gray-500">No articles found</p>
+            <p className="text-xs text-gray-400">Try a different role or category filter.</p>
+          </div>
+        )}
+
+        {/* -- FAQ Sections -- */}
+        {visibleCategories.map((category) => (
+          <div key={category.name} className="space-y-2">
+
+            {/* Category heading */}
+            <div className={`flex items-center gap-2 px-3 py-2 rounded-xl ${category.style.bgColor} border ${category.style.borderColor}`}>
+              <span className={`material-symbols-outlined text-base ${category.style.color}`}>{category.style.icon}</span>
+              <p className={`text-xs font-bold ${category.style.color}`}>{category.name}</p>
             </div>
-          );
-        })}
+
+            {/* Q&A items */}
+            {category.items.map((item, idx) => {
+              const key = `${category.name}-${idx}`;
+              const isOpen = openItem === key;
+              return (
+                <div
+                  key={item._id || idx}
+                  className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden"
+                >
+                  <button
+                    onClick={() => toggle(key)}
+                    className="w-full flex items-start justify-between px-4 py-4 text-left active:bg-gray-50 transition-colors gap-3"
+                  >
+                    <p className="text-sm font-semibold text-gray-800 leading-snug flex-1">{item.question}</p>
+                    <span
+                      className={`material-symbols-outlined text-gray-400 flex-shrink-0 text-xl transition-transform duration-200 mt-0.5 ${isOpen ? 'rotate-180' : ''}`}
+                    >
+                      expand_more
+                    </span>
+                  </button>
+                  {isOpen && (
+                    <div className="px-4 pb-4 pt-1 border-t border-gray-50 accordion-content">
+                      <p className="text-sm text-gray-600 leading-relaxed whitespace-pre-line">{item.answer}</p>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        ))}
 
         {/* -- Contact Support CTA -- */}
         <div className="bg-gradient-to-br from-[#007AFF] to-[#5856D6] rounded-2xl p-5 text-white text-center space-y-2">
